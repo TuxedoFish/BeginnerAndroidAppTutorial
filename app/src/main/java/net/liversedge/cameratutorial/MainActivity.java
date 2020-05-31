@@ -3,15 +3,23 @@ package net.liversedge.cameratutorial;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+
+import static net.liversedge.cameratutorial.Constants.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
     int requestNumber = 1;
     protected static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
+
+    // SECTION 1 - Tutorial 3
+    protected Button takePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,19 @@ public class MainActivity extends AppCompatActivity {
         if(!hasPermission(PERMISSION_CAMERA)) {
             requestPermission(PERMISSION_CAMERA, "Camera");
         }
+
+        // SECTION 1 - Tutorial 3
+
+        takePhoto = findViewById(R.id.button);
+
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "Started by pressing button");
+                startActivity(intent);
+            }
+        });
     }
 
     protected boolean hasPermission(String permission) {
